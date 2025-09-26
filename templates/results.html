@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 200px;
+            margin: 10px;
+            border: 2px solid #444;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #ff9800;
+            color: #121212;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #e68900;
+        }
+    </style>
+</head>
+<body>
+    <h1>Face Recognition Result</h1>
+
+    {% if ref_image %}
+        <div>
+            <h3>Reference Image</h3>
+            <img src="{{ url_for('static', filename=ref_image) }}" alt="Reference Image">
+        </div>
+    {% endif %}
+
+    <div>
+        <h3>Uploaded Image</h3>
+        <img src="{{ url_for('static', filename='uploads/' ~ filename) }}" alt="Uploaded Image">
+    </div>
+
+    <div class="result">
+        {% if name and confidence >= 99 %}
+            ✅ Match Found — Roll Number: {{ roll_number }}, Name: {{ name }} <br>
+            Confidence: {{ "%.2f"|format(confidence) }}%
+        {% else %}
+            ❌ Unknown Face <br>
+            Closest Match Confidence: {{ "%.2f"|format(confidence) }}%
+        {% endif %}
+    </div>
+
+    <br>
+    <a href="{{ url_for('index') }}">Go Back</a>
+</body>
+</html>

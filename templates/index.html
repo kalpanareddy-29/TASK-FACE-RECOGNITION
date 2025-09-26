@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Face Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Face Recognition</h1>
+        <p class="intro">
+            Upload an image or capture directly from your camera and let our AI-powered
+            system recognize faces in real-time. Whether you're testing with existing photos
+            or taking a live snapshot, our model will identify faces with high accuracy.
+        </p>
+
+        <!-- Upload from PC -->
+        <div class="section">
+            <h2>Upload an Image</h2>
+            <form action="/predict" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*">
+                <button type="submit" class="btn">Upload & Recognize</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <!-- Camera Capture -->
+        <div class="section">
+            <h2>Or Capture from Camera</h2>
+            <video id="video" width="320" autoplay></video>
+            <br>
+            <button id="capture" class="btn">Capture</button>
+            <form id="cameraForm" action="/predict" method="POST">
+                <input type="hidden" name="image_data" id="image_data">
+            </form>
+        </div>
+
+        <canvas id="canvas" style="display:none;"></canvas>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
